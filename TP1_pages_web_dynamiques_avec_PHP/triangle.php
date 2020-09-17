@@ -12,19 +12,25 @@
 				$taille=$_GET["taille"];
 			else
 				$taille = 0;
-			$char = "*";
-			if ($taille > 20)
-				echo "Triangle trop grand";
-			else
-				{
-					if ($taille == 0)
-						$taille = 10;
-		
-					for ($i=1; $i<=$taille; $i++)
+			
+			function triangle($Taille) 
+			{
+				$char = "*";
+				if ($Taille > 20)
+					echo "Triangle trop grand";
+				else
 					{
-						echo str_repeat($char, $i)."<br></br>\n";
+						if ($Taille == 0)
+							$Taille = 10;
+			
+						for ($i=1; $i<=$Taille; $i++)
+						{
+							echo str_repeat($char, $i)."<br></br>\n";
+						}
 					}
-				}
+			}
+			triangle(7);
+			
 		?>
 	</body>
 </html>
