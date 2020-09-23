@@ -15,6 +15,7 @@
 			
 			function triangle($Taille) 
 			{
+				$counter = 0;
 				$char = "*";
 				if ($Taille > 20)
 					echo "Triangle trop grand";
@@ -26,11 +27,12 @@
 						for ($i=1; $i<=$Taille; $i++)
 						{
 							echo str_repeat($char, $i)."<br></br>\n";
+							$counter += $i;
 						}
 					}
+				return ($counter);
 			}
-			triangle(7);
-			
+			echo "Le nombre d’étoiles que comporte le triangle : ".triangle(7);			
 		?>
 	</body>
 </html>
