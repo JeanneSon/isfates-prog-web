@@ -6,34 +6,37 @@
 	</head>
 	
 	<body>
-		<p>Triangle de taille ?</p>
+		<p>Triangle : </p>
 		<?php
-			if (isset($_GET["taille"]))
-				$taille=$_GET["taille"];
-			else
-				$taille = 0;
-			
-			function triangle($Taille) 
+			if (isset($_GET["size"]))
 			{
-				$counter = 0;
-				$char = "*";
-				if ($Taille > 20)
-					echo "Triangle trop grand";
-				else
-					{
-						if ($Taille == 0)
-							$Taille = 10;
+				$size=$_GET["size"];
 			
-						for ($i=1; $i<=$Taille; $i++)
+				function triangle($Size) 
+				{
+					$counter = 0;
+					$char = "*";
+					if ($Size > 20)
+						echo "Triangle trop grand.\n";
+					else
 						{
-							echo str_repeat($char, $i)."<br></br>\n";
-							$counter += $i;
+							if ($Size == 0)
+								$Size = 10;
+				
+							for ($i=1; $i<=$Size; $i++)
+							{
+								echo str_repeat($char, $i)."<br></br>\n";
+								$counter += $i;
+							}
 						}
-					}
-				return ($counter);
+					return ($counter);
+				}
+				echo "\t\t<p>Le nombre d’étoiles que comporte le triangle : ".triangle($size)."</p>\n";
 			}
-			echo "Le nombre d’étoiles que comporte le triangle : ".triangle(7);			
 		?>
+		<form action="./saisieTailleTriangle.php">
+			<input type="submit" value="Relancer avec une autre taille." />
+		</form>
 	</body>
 </html>
 	
