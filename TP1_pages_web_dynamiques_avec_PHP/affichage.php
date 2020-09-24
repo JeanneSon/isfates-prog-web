@@ -15,3 +15,15 @@
 		?>
 	</body>
 </html>
+
+<!-- à améliorer :
+	Mettre toutes les parties du code qui sont statiques dans le code HTML directement
+
+
+<body>
+	<p>Mes premières pas en PHP</p>
+	<?php $promo = 2014; ?>
+	<p>Je fais partie de la promo <?php echo $promo ?></p>
+	<p style="text-align: center"><strong>Université de Lorraine</strong></p>
+</body>
+-->
