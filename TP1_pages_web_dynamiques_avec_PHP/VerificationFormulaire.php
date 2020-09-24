@@ -84,5 +84,6 @@
                 echo "absent";
             ?>
         </li>
+    </ul>
 </body>
 </html>

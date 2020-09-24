@@ -22,7 +22,6 @@
     Prénom : 
 	<input type="text" name="prenom" /><br /> 	
     Date de naissance : 
-	<label for="naissance">Veuillez préférer le format yyyy-mm-dd</label>
 	<input type="date" id="naissance" name="naissance" /><br />
 	Pays d'origine :
     <input name="pays" list="pays" />
