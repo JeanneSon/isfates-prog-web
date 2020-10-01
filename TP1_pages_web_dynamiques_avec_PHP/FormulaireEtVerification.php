@@ -2,70 +2,131 @@
 <html>
 
 <head>
-      <title>Vos données</title>
-	  <meta charset="utf-8" />
+        <title>Vos données</title>
+        <meta charset="utf-8" />
+
+        <style>
+            .ok {
+            }
+            .error {
+                background-color: red;
+            }
+        </style>
 </head>
 
 <body>
 <?php
-    $gender_okay = false;
-    $lastname_okay = true;
-    $firstname_okay = true;
-    $date_okay = true;
-    $country_okay = true;
+    $okay = [
+        "gender"    => true,
+        "lastname"  => true,
+        "firstname" => true,
+        "date"      => true,
+        "country"   => true
+    ];
 
-    if (isset($_POST)) {
-        echo print_r($_POST);
+
+    function okayXORError($status) {
+        return $status ? "ok" : "error";
+    }
+
+    function allTrue($array_) {
+        $result = true;
+        foreach ($array_ as $elem) {
+            $result &= $elem;
+        }
+        return $result;
+    }
+    
+    if (isset($_POST["submit"])) {
+        foreach ($okay as $field => $status) {
+            $okay[$field] = false;
+        }
         if (isset($_POST["sexe"])) {
-            $gender = $_POST["sexe"];
+            $gender = trim($_POST["sexe"]);
             if ($gender == "h" || $gender == "f")
-                $gender_okay = true;
+                $okay["gender"] = true;
             else
-                $gender_okay = false;
+            $okay["gender"] = false;
         }
         if (isset($_POST["prenom"])) {
             $firstname = trim($_POST["prenom"]);
-            $firstname_okay = ctype_alpha($firstname);
+            $okay["firstname"] = ctype_alpha($firstname);
         }
         if (isset($_POST["nom"])) {
             $lastname = trim($_POST["nom"]);
-            $firstname_okay = strlen(str_replace(" ", "", $lastname)) > 1;
+            $okay["lastname"] = strlen(str_replace(" ", "", $lastname)) > 1;
         }
         if (isset($_POST["naissance"]) && strlen($_POST["naissance"]) == strlen("yyyy-mm-dd")) {
             $date = $_POST["naissance"];
             list($year, $month, $day) = explode("-", $date);
-            $date_okay = checkdate((int) $month, (int) $day, (int) $year);
+            $okay["date"] = checkdate((int) $month, (int) $day, (int) $year);
         }
         if (isset($_POST["pays"])) {
             $country = trim($_POST["pays"]);
             $possible_countries = ["Allemagne", "Belgique", "Chine", "France", "Maroc", "Tunisie"];
-            $country_okay = in_array($country, $possible_countries);
+            $okay["country"] = in_array($country, $possible_countries);
         }
-        $all_okay = $gender_okay && $lastname_okay && $firstname_okay && $date_okay && $country_okay;
-        /* if ($all_okay) {
-            ?><h1>Vous avez rempli le formulaire correctement. Merci et au revoir!</h1><?php 
+        $all_okay = allTrue($okay);
+        if ($all_okay) {
+            ?>  <h1>Vous avez rempli le formulaire correctement. Merci et au revoir!</h1>
+                <p>
+                    <?php
+                        $collected = ucfirst(strtolower($firstname));
+                        $collected .= ucfirst(strtolower($lastname));
+                        $collected .= ", né le ".$day."/".$month."/".$year." (";
+                        $collected .= $country.")";
+                        echo $collected;
+                    ?>
+        <?php
+            exit;
         }
-        else { */
-            ?> 
+    }?>
+
 <h1>Vos données</h1>
 
 <form method="post" action="#">
 <fieldset>
     <legend>Informations personnelles</legend>
 	Vous êtes :
-    <span <?php if (!$gender_okay) echo 'style="border: 1px solid red"' ?>>  
-        <input type="radio" name="sexe" value="f"/> une femme 	
-        <input type="radio" name="sexe" value="h"/> un homme
+    <span class="<?php echo okayXORError($okay['gender']);?>">  
+        <input type="radio" name="sexe" value="f"
+            <?php 
+                if (isset($_POST["sexe"]) && $_POST["sexe"] == "f")
+                    echo ' checked="checked"';
+            ?>
+        /> une femme
+        <input type="radio" name="sexe" value="h"
+        <?php 
+                if (isset($_POST["sexe"]) && $_POST["sexe"] == "h")
+                    echo ' checked="checked"';
+            ?>
+        /> un homme
     </span><br />
     Nom :    
-	<input type="text" name="nom" required="required" /><br />   
+	<input 
+        type="text" name="nom" required="required"
+        class="<?php echo okayXORError($okay['lastname']);?>"
+        value="<?php if (isset($_POST["nom"])) echo $_POST["nom"]; ?>"
+    /><br />   
     Prénom : 
-	<input type="text" name="prenom" /><br /> 	
+	<input 
+        type="text" name="prenom" 
+        class="<?php echo okayXORError($okay['firstname']);?>"
+        value="<?php if (isset($_POST["prenom"])) echo $_POST["prenom"]; ?>"
+    /><br /> 	
     Date de naissance : 
-	<input type="date" id="naissance" name="naissance" /><br />
+	<input 
+        type="date" id="naissance" name="naissance"
+        class="<?php echo okayXORError($okay['date']);?>"
+        value="<?php if (isset($_POST["naissance"])) echo $_POST["naissance"]; ?>"
+    /><br />
 	Pays d'origine :
-    <input name="pays" list="pays" />
-	<datalist id="pays">
+    <input 
+        name="pays" list="pays"
+        class="<?php echo okayXORError($okay['country']);?>"
+        value="<?php if (isset($_POST["pays"])) echo $_POST["pays"]; ?>"
+    />
+	<datalist id="pays" >
 		<option value="Allemagne" />
 		<option value="Belgique" />
 		<option value="Chine" />
@@ -78,82 +139,24 @@
 
 
 	<br />
-<input type="submit" value="Valider" />
+<input type="submit" name="submit" value="Valider" />
          
 </form>
-        <!-- <?php } ?> -->
-<ul>
-        <li>Sexe : <?php   
-            if (isset($_POST["sexe"])) {
-                $Sexe = $_POST["sexe"];
-                if ($Sexe == "h" || $Sexe == "f")
-                    echo "OK";
-                else 
-                    echo "différent de f ou h";
-            }
-            else 
-                echo "absent";
-            ?>
-        </li>
 
-        <li>Nom : <?php
-            if (isset($_POST["nom"])) {
-                $Nom = trim($_POST["nom"]);
-                $Nom_valide = strlen(str_replace(" ", "", $Nom)) > 1;
-                if ($Nom_valide)
-                    echo "OK";
-                else
-                    echo "trop court";
+<?php 
+    if (isset($_POST["submit"]) && !$all_okay) {
+?>
+    <p>Merci de remplir correctement les champs ci-dessous :</p>
+    <ul>
+        <?php
+            foreach ($okay as $field => $status) {
+                if (!$status)
+                    echo "<li>$field</li>\n";
             }
-            else
-                echo "absent";
-            ?>
-        </li>
-
-        <li>Prénom : <?php
-            if (isset($_POST["prenom"])) {
-                $Prenom = trim($_POST["prenom"]);
-                $Prenom_valide = ctype_alpha($Prenom);
-                if ($Prenom_valide)
-                    echo "OK";
-                else 
-                    echo "contient autre chose que des lettres (a-z)";
-            }
-            else 
-                echo "absent";
-            ?>
-        </li>
-
-        <li>Date de naissance : <?php
-            if (isset($_POST["naissance"])) {
-                $Date = $_POST["naissance"];
-                list($annee, $mois, $jour) = explode("-", $Date);
-                $Date_valide = checkdate($mois, $jour, $annee);
-                if ($Date_valide)
-                    echo "OK";
-                else 
-                    echo "Date invalide";
-            }
-            else
-                echo "absent";
-            ?>
-        </li>
-
-        <li>Pays : <?php
-            if (isset($_POST["pays"])) {
-                $Pays = trim($_POST["pays"]);
-                $Pays_possible = ["Allemagne", "Belgique", "Chine", "France", "Maroc", "Tunisie"];
-                if (in_array($Pays, $Pays_possible)) {
-                    echo "OK";
-                }
-                else
-                    echo "pays non valide";
-            }
-            else
-                echo "absent";
-            ?>
-        </li>
+        ?>
     </ul>
-
+<?php
+    }
+?>
 </body>
 </html>
