@@ -5,9 +5,9 @@
     // TP 1 - exo 6.6
     $Menus = array(
         "Lundi"     => array("Entrée" => "Salade", "Plat" => "Boudin/Purée", "Dessert" => "Mousse au chocolat"),
-        "Mardi"     => array("Entrée" => "Tomates", "Plat" => "Couscous", "Dessert" => "Glace"),
-        "Mercredi"  => array("Entrée" => "Sardines", "Plat" => "Steack/Frites", "Dessert" => "Yaourt"),
-        "Jeudi"     => array("Entrée" => "Jambon", "Plat" => "Paella", "Dessert" => "Gâteau"),
+        "Mardi"     => array("Entrée" => "Tomates", "Plat" => "Couscous", "Dessert" => "Glace", "Fromage" => "Emmental"),
+        "Mercredi"  => array("Apéritif" => "Champagnes blanc", "Entrée" => "Sardines", "Plat" => "Steack/Frites", "Dessert" => "Yaourt"),
+        "Jeudi"     => array("Apéritif" => "Sangria Blanche", "Entrée" => "Jambon", "Plat" => "Paella", "Dessert" => "Gâteau"),
         "Vendredi"  => array("Entrée" => "Poireaux vinaigrette", "Plat" => "Poisson/Riz", "Dessert" => "Pomme")
     );
 ?>
@@ -53,16 +53,35 @@
         <tr>
             <td></td>
             <?php
-                foreach (reset($Menus) as $type => $food) {
-                    echo "<th>$type</th>\n";
+                $tableCols = 1;
+                $types = array();
+                foreach ($Menus as $day => $menu) {
+                    foreach ($menu as $type => $food) {
+                        $types[] = $type;
+                    }
+                }
+                $typeSet = array_unique($types);
+                foreach ($typeSet as $uniqueType) {
+                    echo "<th>$uniqueType</th>";
+                    $tableCols++;
                 }
             ?>
         </tr>
         <?php
             foreach ($Menus as $day => $menu) {
                 echo "<tr>\n\t<th>$day</th>\n";
-                foreach ($Menus[$day] as $food) {
-                    echo "\t<td>$food</td>\n";
+                reset($menu);
+                foreach ($typeSet as $uniqueType) {
+                    $typeIsSet = False;
+                    foreach ($menu as $type => $food) {
+                        if ($uniqueType == $type) {
+                            echo "<td>$food</td>\n";
+                            $typeIsSet = True;
+                        }
+                    }
+                    if (!$typeIsSet) {
+                        echo "<td></td>\n";
+                    }
                 }
                 echo "</tr>\n";
             }
