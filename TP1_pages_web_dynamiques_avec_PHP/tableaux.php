@@ -2,13 +2,13 @@
     // TP 1 - exo 6.1
     $PotesDePromo = array("Nina", "Michelle", "Aurianne", "Sonia");
 
-    // TP 1 - exo 6.4
+    // TP 1 - exo 6.6
     $Menus = array(
-        "Lundi"     => array("Salade", "Boudin/Purée", "Mousse au chocolat"),
-        "Mardi"     => array("Tomates", "Couscous", "Glace"),
-        "Mercredi"  => array("Sardines", "Steack/Frites", "Yaourt"),
-        "Jeudi"     => array("Jambon", "Paella", "Gâteau"),
-        "Vendredi"  => array("Poireaux vinaigrette", "Poisson/Riz", "Pomme")
+        "Lundi"     => array("Entrée" => "Salade", "Plat" => "Boudin/Purée", "Dessert" => "Mousse au chocolat"),
+        "Mardi"     => array("Entrée" => "Tomates", "Plat" => "Couscous", "Dessert" => "Glace"),
+        "Mercredi"  => array("Entrée" => "Sardines", "Plat" => "Steack/Frites", "Dessert" => "Yaourt"),
+        "Jeudi"     => array("Entrée" => "Jambon", "Plat" => "Paella", "Dessert" => "Gâteau"),
+        "Vendredi"  => array("Entrée" => "Poireaux vinaigrette", "Plat" => "Poisson/Riz", "Dessert" => "Pomme")
     );
 ?>
 <!DOCTYPE html>
@@ -48,13 +48,15 @@
         ?>
     </ul>
 
-    <h2>Parcours - array de 2 dimensions (TP 1 - exo 6.4)</h2>
+    <h2>Parcours - array de 2 dimensions (TP 1 - exo 6.6)</h2>
     <table>
         <tr>
-            <td></td> <!-- https://www.w3.org/WAI/tutorials/tables/two-headers/ -->
-            <th>Entrée</th>
-            <th>Plat</th>
-            <th>Dessert</th>
+            <td></td>
+            <?php
+                foreach (reset($Menus) as $type => $food) {
+                    echo "<th>$type</th>\n";
+                }
+            ?>
         </tr>
         <?php
             foreach ($Menus as $day => $menu) {
