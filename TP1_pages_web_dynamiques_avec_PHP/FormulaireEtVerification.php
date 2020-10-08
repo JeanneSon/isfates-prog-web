@@ -24,6 +24,7 @@
         "country"   => true
     ];
 
+    include("TabPays.inc.php");
 
     function okayXORError($status) {
         return $status ? "ok" : "error";
@@ -63,7 +64,6 @@
         }
         if (isset($_POST["pays"])) {
             $country = trim($_POST["pays"]);
-            $possible_countries = ["Allemagne", "Belgique", "Chine", "France", "Maroc", "Tunisie"];
             $okay["country"] = in_array($country, $possible_countries);
         }
         $all_okay = allTrue($okay);
@@ -71,7 +71,7 @@
             ?>  <h1>Vous avez rempli le formulaire correctement. Merci et au revoir!</h1>
                 <p>
                     <?php
-                        $collected = ucfirst(strtolower($firstname));
+                        $collected = ucfirst(strtolower($firstname))." ";
                         $collected .= ucfirst(strtolower($lastname));
                         $collected .= ", né le ".$day."/".$month."/".$year." (";
                         $collected .= $country.")";
@@ -127,12 +127,11 @@
         value="<?php if (isset($_POST["pays"])) echo $_POST["pays"]; ?>"
     />
 	<datalist id="pays" >
-		<option value="Allemagne" />
-		<option value="Belgique" />
-		<option value="Chine" />
-		<option value="France" />
-		<option value="Maroc" />
-		<option value="Tunisie" />
+        <?php 
+			foreach ($possible_countries as $country) {
+				echo "<option value='$country' />";
+			}
+		?>
 	</datalist> 	
 	
 </fieldset>
