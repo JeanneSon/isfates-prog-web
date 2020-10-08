@@ -26,12 +26,12 @@
 	Pays d'origine :
     <input name="pays" list="pays" />
 	<datalist id="pays">
-		<option value="Allemagne" />
-		<option value="Belgique" />
-		<option value="Chine" />
-		<option value="France" />
-		<option value="Maroc" />
-		<option value="Tunisie" />
+		<?php 
+			include("TabPays.inc.php");
+			foreach ($possible_countries as $country) {
+				echo "<option value='$country' />";
+			}
+		?>
 	</datalist> 	
 	
 </fieldset>
