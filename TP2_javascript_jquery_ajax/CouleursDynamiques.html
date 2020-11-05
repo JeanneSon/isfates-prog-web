@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Saisie des couleurs</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	input[type="text"], select { 
+	width: 80px;
+	position: absolute;
+	left:460px; 	
+	}
+	
+	input[type="button"] { 
+	width: 80px;
+	position: absolute;
+	left:560px; 	
+	}
+	
+	fieldset {
+	width: 620px;
+	}
+	</style>
+
+	<script>
+		function colorBackground(obj) {
+			alert(obj.value);
+			document.styleSheets[0].insertRule(`* {background-color: ${obj.value}}`, 0);
+		}
+	</script>
+	</head>
+  
+<body>
+<h1>Couleurs dynamiques</h1>
+<form>
+	<fieldset>
+	<legend>Effet immédiat</legend>
+	
+	Couleur du texte de la page, à la perte du focus :	
+	<input 
+		type="text" name="fond"  value="white" 
+		onBlur="document.body.style.color = this.value"/> 
+	<br /><br />
+	
+	Couleur de fond de page, à chaque changement de sélection :	
+	<select
+		onChange="document.body.style.backgroundColor = this.value;" >
+		<option value="#40E0D0">Turquoise</option>
+		<option value="#2E8B57">Vert</option>
+		<option value="#87CEEB">Bleu ciel</option>
+		<option value="#F4A460">Marron clair</option>
+		<option value="#FF1493">Rose</option>
+		<option value="#FFFFFF" selected="selected">Blanc</option>
+	</select>
+	<br /><br />
+	
+	Couleur de fond de la case ci-contre, à chaque touche frappée :	
+ 	<input type="text" name="texte" value="#000" onkeyup="document.getElementById('case').style.backgroundColor = this.value;"/> 
+	<span id="case" style="border:solid 1px black; background-color:40E0D0">&nbsp;&nbsp;&nbsp;</span>  
+
+	</fieldset>
+	<br />
+	
+	<fieldset>
+	<legend>Effet différé</legend>
+	
+	<span id="p1" style="background-color:#eee;">Couleur de fond de <strong>ce paragraphe</strong> après click : </span>
+	<input type="text"   name="fondparagraphe"  value="white" />
+	<input type="button" value="Cliquez" 
+		onClick="document.getElementById('p1').style.backgroundColor = document.getElementsByName('fondparagraphe')[0].value"/> 
+	</form>
+		
+</body>
+</html>

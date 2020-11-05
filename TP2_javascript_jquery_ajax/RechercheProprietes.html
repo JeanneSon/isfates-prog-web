@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Recherche de propriétés</title>
+  <meta charset="utf-8" />
+  <style>
+    td,
+    th {
+      border-bottom: 1px solid rgba(71, 103, 117, 0.753);
+      padding: 0.4rem;
+
+    }
+    th {
+      background-color: aliceblue;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body bgcolor="white">
+  <form name="MonFormulaire">
+    <span id="id1" style="background-color : red">Zone de saisie : </span>
+    <input type="text" name="saisie" value="vide">
+    <input type="button" name="submit" onClick="Afficher()" value="Afficher">
+  </form>
+
+  <p>Un paragraphe.</p>
+  <script language="javascript">
+    function Afficher() {
+      //recherche des objets et de leurs propriétés
+      var object = document;
+      for (i in object) { document.write(i + " = " + object[i] + "<BR>\n"); }
+    }
+    //Afficher();
+  </script>
+  <h1>TP 2; 3.1</h1>
+  <table>
+    <tr>
+      <th>titre de la page</th>
+      <td>document.title</td>
+    </tr>
+    <tr>
+      <th>couleur de fond de page</th>
+      <td>document.bgColor</td>
+    </tr>
+    <tr>
+      <th>nombre de formulaire contenu dans la page</th>
+      <td>document.forms.length</td>
+    </tr>
+    <tr>
+      <th>contenu de la zone de saisie</th>
+      <td>document.getElementsByName("saisie")</td>
+    </tr>
+    <tr>
+      <th>contenu de la zone de saisie</th>
+      <td>document.getElementsByName("saisie")[0].value</td>
+    </tr>
+    <tr>
+      <th>couleur de fond de la zone « Zone de saisie : »</th>
+      <td>document.getElementById("id1").attributes.style.value</td>
+    </tr>
+    <tr>
+      <th>longueur du texte (i.e nombre de caractères) du paragraphe</th>
+      <td>document.getElementsByTagName("p")[0].innerHTML.length</td>
+    </tr>
+  </table>
+
+  <h1>TP 2; 3.2</h1>
+  <table>
+    <thead>
+      <th>propriétés</th>
+      <th>valeurs</th>
+    </thead>
+    <tr>
+      <td>document.all.saisie.tagName</td>
+      <td>"INPUT"</td>
+    </tr>
+    <tr>
+      <td>document.forms['MonFormulaire'].submit.onclick</td>
+      <td>function onclick(event)</td>
+    </tr>
+    <tr>
+      <td>document.MonFormulaire.submit.outerHTML</td>
+      <td>"&lt;input type=\"button" name=\"submit\" onclick=\"Afficher()\" value=\"Afficher\">"</td>
+    </tr>
+    <tr>
+      <td>document.forms['MonFormulaire'].elements['submit'].type</td>
+      <td>"button"</td>
+    </tr>
+    <tr>
+      <td>document.getElementById('id1').style</td>
+      <td>CSS2Properties { "background-color" → "red" }</td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!-- TP 2; 1 -->
+<html>
+<head>
+	<title>Triangle avec boutons</title>
+	<script type="text/javascript">
+	
+	//
+	// Fonction qui retourne le code HTML correspondant au dessin d'un triangle 
+	// de taille "taille", paramètre de la fonction 
+	//
+	
+	function codeTriangle(taille) {
+		var triangleHTML = '';
+		for (var i=0; i <= taille; i++) {
+			for (var j=0; j < i; j++) {
+				triangleHTML += '*';
+			}
+			triangleHTML += '<br />';
+		}
+		return triangleHTML;
+	}
+
+	function printTriangle(size) {
+		document.getElementById('triangle').innerHTML=codeTriangle(size);
+	}
+	
+	
+</script>
+</head>
+
+<body>
+<h1>TP 2 - exo 1</h1>
+
+<form action="#">
+	<input 	type="button" name="effacer" 	value="Effacer" 
+			onClick="printTriangle(0)"/>
+	<input 	type="button" name="cinq" 		value="5" 
+			onClick="printTriangle(this.value)"/>
+	<input 	type="button" name="dix" 		value="10" 
+			onClick="printTriangle(this.value)"/>
+	<input 	type="button" name="quinze" 	value="15" 
+			onClick="printTriangle(this.value)"/>
+</form>
+<div id="triangle"></div>
+
+
+</body>
+</html>
