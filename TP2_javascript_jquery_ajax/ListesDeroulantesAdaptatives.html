@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Listes déroulantes adaptatives</title>
+	<meta charset="utf-8" />
+	<style type="text/css">
+	select {width: 150px;}
+	
+	</style>
+	<script type="text/javascript">
+	
+	
+		function choixRegion()
+		{
+			region = document.getElementsByName("regions")[0].value;
+			if (region === "1") {
+				document.getElementById("div_departements").innerHTML = 
+				`<select>
+					<option></option>
+					<option>Moselle</option>
+					<option>Meuse</option>
+					<option>Meurthe-et-Moselle</option>
+				</select>`;
+			}
+			else if (region === "2") {
+				document.getElementById("div_departements").innerHTML = 
+				`<select>
+					<option></option>
+					<option>Vosges</option>
+					<option>Bas-Rhin</option>
+					<option>Haut-Rhin</option>
+				</select>`;
+			}
+		}
+	</script>
+</head>
+
+<body>
+<form name="formulaire">
+<select name="regions" onChange="choixRegion()">
+	<option value="0"></option>
+	<option value="1">Lorraine</option>
+	<option value="2">Alsace</option>
+</select>
+
+<div id="div_departements">
+<select>
+	<option></option>
+	<option>Moselle</option>
+	<option>Meuse</option>
+	<option>Vosges</option>
+	<option>Meurthe-et-Moselle</option>
+	<option>Bas-Rhin</option>
+	<option>Haut-Rhin</option>
+</select>
+</div>
+</form>
+
+</body>
+</html>

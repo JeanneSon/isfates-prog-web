@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vérification de formulaire</title>
+	<meta charset="utf-8" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$("#verifier").click(function() {
+				$.get("checkdate.php?date="+$("#date").val(), function (data) {
+					if (data === "1") {
+						$("#result").html("Date correcte");
+					}
+					else if (data === "0") {
+						$("#result").html("Date incorrecte");
+					}
+				});
+			});
+		});	
+	
+	
+	</script>	
+</head>
+
+<body bgcolor="white">
+    <h1>Vérification de formulaire</h1>
+	
+	<form>
+		Date : 
+		<input type="text" id="date" name="date" size="20" value="29/02/2001" />
+		<input type="button" id="verifier" value="Vérifier" />
+	</form>
+	<div id="result"><div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Chat</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+		  
+			$(document).ready(function() {
+				$("#envoyer").click(function() {
+					$.post("insertChatLine.php", 
+						{
+							pseudo: $("#pseudo").val(),
+							message: $("#message").val()
+						}
+					);
+					$.get("chatData.txt", function(data) {
+						$("#chat").html(data);
+					});
+				})
+				setInterval(function(){
+					$.get("chatData.txt", function(data) {
+						$("#chat").html(data);
+					});			
+				}, 10000)
+			});
+		  
+		</script>
+  
+	
+		<style type="text/css">
+#chat {
+	width: 450px;
+    height: 100px;
+    border: black 1px solid;
+    background-color: #eee;
+    overflow-y: scroll; 
+    padding: 5px;
+    margin-left: 10px;
+}          
+		</style>
+	</head>
+  
+	<body>
+		Fenêtre de chat :<br /><br />
+		<div id="chat"></div><br />
+		
+		<form action="#" method="post">
+        Pseudo  : <input type="text" 	id="pseudo" 	size="6" 		/>
+        Message : <input type="text"	id="message" 	size="25" 		/>
+				  <input type="button" 	id="envoyer" 	value="Envoyer" />
+		</form>
+    </body>
+
+</html>
+
